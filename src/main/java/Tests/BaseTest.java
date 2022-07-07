@@ -7,7 +7,6 @@ import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
     protected static WebDriver driver;
-
     protected String url;
 
     @BeforeMethod
