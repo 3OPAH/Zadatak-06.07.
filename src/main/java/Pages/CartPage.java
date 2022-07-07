@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CartPage extends BasePage{
@@ -37,6 +38,26 @@ public class CartPage extends BasePage{
                 returnValue = true;
                 break;
             }
+        }
+
+        return returnValue;
+    }
+
+    public HashMap<String, Integer> verifyItemNumberInCart () {
+
+        HashMap<String, Integer> returnValue = new HashMap<String, Integer>();
+        List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
+
+        for (int i = 0; i < cartItems.size(); i++){
+            String cartItem = cartItems.get(i).findElement(By.xpath(".//div[@class='inventory_item_name']")).getText();
+            if (returnValue.containsKey(cartItem)){
+                int tempCount = returnValue.get(cartItem);
+                returnValue.put(cartItem, tempCount++);
+            }
+            else{
+                returnValue.put(cartItem, 1);
+            }
+
         }
 
         return returnValue;

@@ -8,23 +8,24 @@ import java.util.List;
 
 public class ProductsPage extends BasePage{
 
-    private WebDriver driver;
+    //private WebDriver driver;
     private String url;
 
 
     public ProductsPage(WebDriver driver) {
-        this.driver = driver;
+        //this.driver = driver;
+        super(driver);
         this.url = "https://www.saucedemo.com/inventory.html";
     }
 
     public ProductsPage(){}
 
-    public WebDriver getDriver() {
+    /*public WebDriver getDriver() {
         return driver;
-    }
+    }*/
 
     public void setDriver(WebDriver driver) {
-        this.driver = driver;
+        driver = driver;
     }
 
     public String getUrl() {
@@ -60,14 +61,35 @@ public class ProductsPage extends BasePage{
         this.getItemFromList(value).click();
     }
 
-    public String addCheapestItem (){
 
-        this.sortItemsBy("Price (low to high)");
-
+    public WebElement getCheapestItem (){
         List<WebElement> listInventoryItems = driver.findElements(By.className("inventory_item"));
-        listInventoryItems.get(0).findElement(By.xpath(".//button")).click();
 
-        return listInventoryItems.get(0).findElement(By.xpath(".//div[@class='inventory_item_name']")).getText();
+        double lowestPrice = Double.parseDouble(listInventoryItems.get(0).findElement(
+                By.xpath(".//div[@class='inventory_item_price']")).getText().substring(1));
+
+        WebElement lowestPriceItem = null;
+
+        for (int i = 0; i < listInventoryItems.size(); i++) {
+            Double price = Double.parseDouble(listInventoryItems.get(i).findElement(
+                    By.xpath(".//div[@class='inventory_item_price']")).getText().substring(1));
+            if (price < lowestPrice){
+                lowestPrice = price;
+                lowestPriceItem = listInventoryItems.get(i);
+            }
+        }
+        return lowestPriceItem;
+
+    }
+    public String addCheapestItem (WebElement item){
+
+        //this.sortItemsBy("Price (low to high)");
+
+        //List<WebElement> listInventoryItems = driver.findElements(By.className("inventory_item"));
+        //listInventoryItems.get(0).findElement(By.xpath(".//button")).click();
+        item.findElement(By.xpath(".//button")).click();
+        return item.findElement(By.xpath(".//div[@class='inventory_item_name']")).getText();
+        //return listInventoryItems.get(0).findElement(By.xpath(".//div[@class='inventory_item_name']")).getText();
     }
 
     public String addMostExpensiveItem (){
