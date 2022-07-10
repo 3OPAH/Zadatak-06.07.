@@ -6,13 +6,12 @@ import org.openqa.selenium.WebElement;
 
 public class LoginPage extends  BasePage{
 
-    private WebDriver driver;
     private String userName = "standard_user";
     private String password = "secret_sauce";
     private String url;
 
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         this.url = "https://www.saucedemo.com/";
     }
 

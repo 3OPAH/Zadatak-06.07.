@@ -52,7 +52,7 @@ public class Testovi extends BaseTest{
         CartPage cartPage = new CartPage(driver);
         cartPage.openPage();
 
-        //Assert.assertEquals(cartPage.verifyItem(expensive), true);
+        Assert.assertEquals(cartPage.verifyItem(expensive), true);
 
     }
 }

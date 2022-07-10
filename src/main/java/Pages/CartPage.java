@@ -9,11 +9,10 @@ import java.util.List;
 
 public class CartPage extends BasePage{
 
-    private WebDriver driver;
     private String url;
 
     public CartPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         this.url = "https://www.saucedemo.com/cart.html";
     }
 
@@ -45,14 +44,14 @@ public class CartPage extends BasePage{
 
     public HashMap<String, Integer> verifyItemNumberInCart () {
 
-        HashMap<String, Integer> returnValue = new HashMap<String, Integer>();
+        HashMap<String, Integer> returnValue = new HashMap<>();
         List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
 
         for (int i = 0; i < cartItems.size(); i++){
             String cartItem = cartItems.get(i).findElement(By.xpath(".//div[@class='inventory_item_name']")).getText();
             if (returnValue.containsKey(cartItem)){
                 int tempCount = returnValue.get(cartItem);
-                returnValue.put(cartItem, tempCount++);
+                returnValue.put(cartItem, tempCount + 1);
             }
             else{
                 returnValue.put(cartItem, 1);
